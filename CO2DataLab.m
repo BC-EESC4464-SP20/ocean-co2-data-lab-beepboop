@@ -28,8 +28,23 @@ SST = NaN(length(longrid),length(latgrid),length(monthgrid));
 %% 2b. Pull out the seawater pCO2 (PCO2_SW) and sea surface temperature (SST)
 %data and reshape it into your new 3-dimensional arrays
 
-for i = 
-     
+for i = 1:21084
+  for  x = find (CO2data.LON(i) == longrid);
+      for y = find (CO2data.LAT(i) == latgrid);
+          for z = find (CO2data.MONTH(i) == monthgrid);
+              find(CO2data.SST)
+          end
+      end
+  end
+end
+
+%    x = find (CO2data.LON(i) == longrid);
+%    y = find (CO2data.LAT(i) == latgrid);
+%    z = find (CO2data.MONTH(i) == monthgrid);
+ 
+
+   
+     k = find(CO2data.SST(x y,z));   
     
 
 %% 3a. Make a quick plot to check that your reshaped data looks reasonable
