@@ -23,14 +23,13 @@ monthgrid = unique(CO2data.MONTH); %<-- following the same approach, find all un
     %temperature)
     
 PCO2_SW = NaN(length(longrid),length(latgrid),length(monthgrid));
-SST = NaN(length(longrid),length(latgrid),length(monthgrid));
+SST = NaN(72,40,12);
+
 
 %% 2b. Pull out the seawater pCO2 (PCO2_SW) and sea surface temperature (SST)
 %data and reshape it into your new 3-dimensional arrays
 
-for i = 
-     
-    
+%<--
 
 %% 3a. Make a quick plot to check that your reshaped data looks reasonable
 %Use the imagesc plotting function, which will show a different color for
