@@ -45,7 +45,7 @@ end
 %will have to pick one at a time to check - i.e. this example is just for
 %January
 
-imagesc(SSTgrid(:,:,5)-SSTgrid(:,:,12))
+imagesc(SSTgrid(:,:,7))
 
 
 
