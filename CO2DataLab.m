@@ -22,29 +22,21 @@ monthgrid = unique(CO2data.MONTH); %<-- following the same approach, find all un
     %lab you will need PCO2_SW (seawater pCO2) and SST (sea surface
     %temperature)
     
-PCO2_SW = NaN(length(longrid),length(latgrid),length(monthgrid));
-SST = NaN(length(longrid),length(latgrid),length(monthgrid));
+PCO2_SWgrid = NaN(length(latgrid),length(longrid),length(monthgrid));
+SSTgrid = NaN(length(latgrid),length(longrid),length(monthgrid));
 
 %% 2b. Pull out the seawater pCO2 (PCO2_SW) and sea surface temperature (SST)
 %data and reshape it into your new 3-dimensional arrays
 
 for i = 1:21084
-  for  x = find (CO2data.LON(i) == longrid);
-      for y = find (CO2data.LAT(i) == latgrid);
-          for z = find (CO2data.MONTH(i) == monthgrid);
-              find(CO2data.SST)
-          end
-      end
-  end
+x = find (CO2data.LAT(i) == latgrid);
+y = find (CO2data.LON(i) == longrid);
+z = find (CO2data.MONTH(i) == monthgrid);
+SSTgrid(x,y,z)=CO2data.SST(i);
 end
 
-%    x = find (CO2data.LON(i) == longrid);
-%    y = find (CO2data.LAT(i) == latgrid);
-%    z = find (CO2data.MONTH(i) == monthgrid);
- 
 
-   
-     k = find(CO2data.SST(x y,z));   
+  
     
 
 %% 3a. Make a quick plot to check that your reshaped data looks reasonable
@@ -53,17 +45,18 @@ end
 %will have to pick one at a time to check - i.e. this example is just for
 %January
 
-%imagesc(SST(:,:,1))
+imagesc(SSTgrid(:,:,9))
+
 
 %% 3b. Now pretty global maps of one month of each of SST and pCO2 data.
 %I have provided example code for plotting January sea surface temperature
 %(though you may need to make modifications based on differences in how you
 %set up or named your variables above).
 
-figure(1); clf
+figure(1); 
 worldmap world
-contourfm(latgrid, longrid, SST(:,:,1)','linecolor','none');
-colorbar
+contourfm(latgrid, longrid, SSTgrid(:,:,1)','linecolor','none');
+colorbar bone
 geoshow('landareas.shp','FaceColor','black')
 title('January Sea Surface Temperature (^oC)')
 
