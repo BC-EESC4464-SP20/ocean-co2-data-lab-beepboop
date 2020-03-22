@@ -154,24 +154,35 @@ Relative_PCO2 = PCO2temp - PCO2bio;
 %section of 14 degrees longitude - I picked the middle point)
 
 %BATS  = (lat = 31.6 // long = -64.16) =(28, 60, :)
-[BATS_lat] = find(min(abs(latgrid-31.6)));
-[BATS_lon] = min(abs(longrid-(-64.16+360)));
+[BATS_lat,BATS_latloc] = min(abs(latgrid-31.6));
+[BATS_lon, BATS_lonloc] = min(abs(longrid-(-64.16+360)));
+p = SSTgrid(BATS_latloc,BATS_lonloc,:);
+subplot(p)
+%% Perhaps Wrong
 % SSTgrid(BATS_lat,BATS_lon,:);
+BATS = NaN(4,12);
+    BATS_SST = SSTgrid(28,60,:);
+    BATS_PCO2SW = PCO2_SWgrid(28,60,:);
+    BATS_PCO2bio = PCO2atTmean(28,60,:);
+    BATS_PCO2t = PCO2atTobs(28,60,:);
+  BATS =[BATS_SST, BATS_PCO2SW, BATS_PCO2bio,BATS_PCO2t]
+  
+  
+%   PCO2_SWgrid(x,y,z)=CO2data.PCO2_SW(i);
+%     subplot(BATS_SST,BATS_PCO2SW,BATS_PCO2bio);
+%Station P (lat = 50N 145W)-->(33,44,:)
+    StatP_SST = SSTgrid(33,44,:);
+    StatP_PCO2SW = PCO2_SWgrid(33,44,:);
+    StatP_PCO2bio = PCO2atTmean(33,44,:);
+    StatP_PCO2t = PCO2atTobs(33,44,:);
 
-%BATS_1 = SSTgrid(28,60,:);
-
-% BATS_2 = PCO2_SWgrid(28,60,:);
-% BATS_3 = PCO2atTmean(28,60,:);
-% BATS_4 = PCO2atTobs(28,60,:);
-
-
-
-%Station P 
-%Ross Sea
-
+%Ross Sea (76.5S ,, 176E) --> (1, 36, :)
+    Ross_SST = SSTgrid(1, 36, :);
+    Ross_PCO2SW = PCO2_SWgrid(1, 36, :);
+    Ross_PCO2bio = PCO2atTmean(1, 36, :);
+    Ross_PCO2t = PCO2atTobs(1, 36, :);
 %% 8. Reproduce your own versions of the maps in figures 7-9 in Takahashi et al. 2002
 % But please use better colormaps!!!
 % Mark on thesese maps the locations of the three stations for which you plotted the
 % seasonal cycle above
 
-%<--
