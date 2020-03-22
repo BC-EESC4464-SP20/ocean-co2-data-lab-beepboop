@@ -67,6 +67,8 @@ colorbar bone
 geoshow('landareas.shp','FaceColor','black')
 title('January Sea Surface Temperature (^oC)')
 
+
+
 %Check that you can make a similar type of global map for another month
 %and/or for pCO2 using this approach. Check the documentation and see
 %whether you can modify features of this map such as the contouring
@@ -78,7 +80,7 @@ contourfm(latgrid, longrid, SSTgrid(:,:,5),'linecolor','none');
 cmocean('balance')
 colorbar bone %can comment out to make the countries black
 geoshow('landareas.shp','FaceColor','black')
-title('January Sea Surface Temperature (^oC)')
+title('May Sea Surface Temperature (^oC)')
 
 
 %% 4. Calculate and plot a global map of annual mean pCO2
@@ -91,29 +93,34 @@ contourfm(latgrid, longrid, PCO2SWAnnMean(:,:),'linecolor','none');
 cmocean('balance')
 colorbar bone %can comment out to make the countries black
 geoshow('landareas.shp','FaceColor','black')
-title('January Sea Surface Temperature (^oC)')
+title('Annual Mean Seawater pCO2 in ppm')
+
 %% 5. Calculate and plot a global map of the difference between the annual mean seawater and atmosphere pCO2
 PCO2_AIRgrid = NaN(length(latgrid),length(longrid),length(monthgrid));
+% the year was 2006
+% for i = 1:height(CO2data)
+% x = find (CO2data.LAT(i) == latgrid);
+% y = find (CO2data.LON(i) == longrid);
+% z = find (CO2data.MONTH(i) == monthgrid);
+% PCO2_AIRgrid(x,y,z)=CO2data.PCO2_AIR(i);
+% end
 
-for i = 1:height(CO2data)
-x = find (CO2data.LAT(i) == latgrid);
-y = find (CO2data.LON(i) == longrid);
-z = find (CO2data.MONTH(i) == monthgrid);
-PCO2_AIRgrid(x,y,z)=CO2data.PCO2_AIR(i);
-end
+% PCO2AIRAnnMean = nanmean(PCO2_AIRgrid, 3);
 
-PCO2AIRAnnMean = nanmean(PCO2_AIRgrid, 3);
+% DiffAnnMean = PCO2SWAnnMean - PCO2AIRAnnMean;
 
-DiffAnnMean = PCO2SWAnnMean - PCO2AIRAnnMean;
+DiffAnnMean1 = PCO2SWAnnMean - 381.2; %need to find credible source for this number
 
 figure(4)
 worldmap world
-contourfm(latgrid, longrid, DiffAnnMean(:,:),'linecolor','none');
+contourfm(latgrid, longrid, DiffAnnMean1(:,:),'linecolor','none');
 cmocean('balance')
 colorbar bone %can comment out to make the countries black
 geoshow('landareas.shp','FaceColor','black')
-title('January Sea Surface Temperature (^oC)')
+title('January Sea Surface Temperature (^oC)') %change title name
 
+% negative = net sink
+% positive = net source
 %% 6. Calculate relative roles of temperature and of biology/physics in controlling seasonal cycle
 
 %Equation 1
@@ -126,6 +133,7 @@ PCO2atTmean = PCO2_SWgrid .* exp(0.0423*(TMean_rep - SSTgridMean));
 PCO2atTobs = PCO2SWAnnMean .* exp(0.0423*(SSTgridMean - TMean_rep));
 %temperature,, 
 
+%% i dont think we need any of this
 %Equation 3
 Tmax_bio = nanmax(PCO2atTmean,[],3);
 Tmin_bio = nanmin(PCO2atTmean,[],3);
@@ -141,11 +149,25 @@ Relative_PCO2 = PCO2temp - PCO2bio;
 %negative values where bio is stronger // positive values where temp is
 %stronger
 
-
 %% 7. Pull out and plot the seasonal cycle data from stations of interest
 %Do for BATS, Station P, and Ross Sea (note that Ross Sea is along a
 %section of 14 degrees longitude - I picked the middle point)
 
+%BATS  = (lat = 31.6 // long = -64.16) =(28, 60, :)
+[BATS_lat] = find(min(abs(latgrid-31.6)));
+[BATS_lon] = min(abs(longrid-(-64.16+360)));
+% SSTgrid(BATS_lat,BATS_lon,:);
+
+%BATS_1 = SSTgrid(28,60,:);
+
+% BATS_2 = PCO2_SWgrid(28,60,:);
+% BATS_3 = PCO2atTmean(28,60,:);
+% BATS_4 = PCO2atTobs(28,60,:);
+
+
+
+%Station P 
+%Ross Sea
 
 %% 8. Reproduce your own versions of the maps in figures 7-9 in Takahashi et al. 2002
 % But please use better colormaps!!!
