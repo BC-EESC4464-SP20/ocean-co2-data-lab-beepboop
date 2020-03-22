@@ -163,12 +163,13 @@ BATS_PCO2SW = squeeze(PCO2_SWgrid(BATS_latloc,BATS_lonloc,:));
 BATS_PCO2bio = squeeze(PCO2atTmean(BATS_latloc,BATS_lonloc,:));
 BATS_PCO2t = squeeze(PCO2atTobs(BATS_latloc,BATS_lonloc,:));
 
-hold on
-plot(BATS_SST)
-plot(BATS_PCO2SW)
+
+
+% plot(BATS_SST)
+% plot(BATS_PCO2SW)
 plot(BATS_PCO2bio)
 plot(BATS_PCO2t)
-hold off
+
 
 %% Perhaps Wrong
 % % SSTgrid(BATS_lat,BATS_lon,:);
