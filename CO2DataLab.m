@@ -132,7 +132,10 @@ PCO2atTmean = PCO2_SWgrid .* exp(0.0423*(TMean_rep - SSTgridMean));
 %biological,, what was the pCO2 be if we hold it constant
 
 %Equation 2
-PCO2atTobs = PCO2SWAnnMean .* exp(0.0423*(SSTgridMean - TMean_rep));
+%ObsGridMean = nanmean(PCO2_SWgrid, 3);
+Tobs_rep = repmat(ObsGridMean,1,1,12);
+PCO2SWAnnObsMean_rep = repmat(PCO2SWAnnMean,1,1,12);
+PCO2atTobs = PCO2SWAnnObsMean_rep .* exp(0.0423*(ObsGridMean-Tobs_rep));
 %temperature,, 
 
 %% i dont think we need any of this // jk we do
